@@ -1,6 +1,6 @@
 /**
  * @name AV1 Embedder
- * @version 0.0.2
+ * @version 0.0.3
  * @description Adds a replace button to convert Discord CDN links to embeddable format and resend the converted link.
  * @author Gazel
  * @source https://github.com/EpicGazel/BDAV1Embedder/blob/main/av1-embedder.plugin.js
@@ -8,24 +8,8 @@
  * @website https://github.com/EpicGazel/BDAV1Embedder
  * @donate https://ko-fi.com/gazel
  */
- 
- const config = {
-	"info": {
-		"name": "AV1 Embedder",
-		"version": "0.0.1",
-		"description": "Adds a replace button to convert Discord CDN links to embeddable format and resend the converted link.",
-		"source": "https://github.com/EpicGazel/BDAV1Embedder/blob/main/av1-embedder.plugin.js",
-		"github": "https://github.com/EpicGazel/BDAV1Embedder",
-		"authors": [{
-			"name": "Gazel"
-		}]
-	},
-	"settings": {
-		"Setting": false,
-	}
-}
 
-const Api = new BdApi(config.info.name);
+const Api = new BdApi("AV1 Embedder");
 const getModule = Api.Webpack.getModule;
 
 const insertText = (() => {
