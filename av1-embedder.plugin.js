@@ -1,15 +1,19 @@
 /**
  * @name AV1 Embedder
- * @version 0.0.1
- * @description Converts Discord CDN links to embeddable format automatically and provides an option to resend the converted link.
+ * @version 0.0.2
+ * @description Adds a replace button to convert Discord CDN links to embeddable format and resend the converted link.
  * @author Gazel
+ * @source https://github.com/EpicGazel/BDAV1Embedder/blob/main/av1-embedder.plugin.js
+ * @updateUrl https://raw.githubusercontent.com/EpicGazel/BDAV1Embedder/main/av1-embedder.plugin.js
+ * @website https://github.com/EpicGazel/BDAV1Embedder
+ * @donate https://ko-fi.com/gazel
  */
  
  const config = {
 	"info": {
 		"name": "AV1 Embedder",
 		"version": "0.0.1",
-		"description": "EmbedsAv1s uploaded to discord directely.",
+		"description": "Adds a replace button to convert Discord CDN links to embeddable format and resend the converted link.",
 		"source": "https://github.com/EpicGazel/BDAV1Embedder/blob/main/av1-embedder.plugin.js",
 		"github": "https://github.com/EpicGazel/BDAV1Embedder",
 		"authors": [{
@@ -60,8 +64,8 @@ module.exports = () => ({
     },
     convertCDNLink(link) {
         // Convert .com to .xyz, attachments to player, remove tracking parameters, and trailing "&" after .mp4 or .webm
-        return link.replace('.com', '.xyz')
-                   .replace('attachments', 'player')
+        return "https://embeds.video/" + link.replace('.com', '.xyz')
+                   .replace('attachments', 'plzproxy')
                    .replace(/[\?&](ex|is|hm)=[^&]+/g, '')
                    .replace(/\.mp4(&|$)/, '.mp4')
                    .replace(/\.webm(&|$)/, '.webm');
