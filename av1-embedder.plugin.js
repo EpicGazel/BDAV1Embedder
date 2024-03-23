@@ -1,6 +1,6 @@
 /**
  * @name AV1 Embedder
- * @version 0.0.3
+ * @version 0.0.4
  * @description Adds a replace button to convert Discord CDN links to embeddable format and resend the converted link.
  * @author Gazel
  * @source https://github.com/EpicGazel/BDAV1Embedder/blob/main/av1-embedder.plugin.js
@@ -11,6 +11,35 @@
 
 const Api = new BdApi("AV1 Embedder");
 const getModule = Api.Webpack.getModule;
+
+// const config = {
+//     defaultConfig: [ 
+//     {
+//         type: 'switch',
+//         name: 'Enable AV1 Embedder',
+//         id: 'av1EmbedderEnabled',
+//         value: true
+//     },
+//     {
+//         type: 'switch',
+//         name: 'Enable AVIF Embedder',
+//         id: 'avifEmbedderEnabled',
+//         value: false
+//     },
+//     {
+//         type: 'text',
+//         name: 'AV1 Converter URL',
+//         id: 'av1ConverterURL',
+//         value: '',
+//     }
+//     ]
+// };
+
+const mySettings = {
+    av1EmbedderEnabled: true,
+    avifEmbedderEnabled: false,
+    av1ConverterURL: '',
+}
 
 const insertText = (() => {
     let ComponentDispatch;
@@ -25,6 +54,9 @@ const insertText = (() => {
 })();
 
 module.exports = () => ({
+    // constructor() {
+    //     this._config = config;
+    // },
     start() {
         this.observer = new MutationObserver(this.checkAndConvertLinks.bind(this));
         this.observer.observe(document.body, { childList: true, subtree: true });
@@ -36,8 +68,17 @@ module.exports = () => ({
     checkAndConvertLinks() {
         const links = document.querySelectorAll('a');
         links.forEach(link => {
-            if (link.href.includes('cdn.discordapp.com') && (link.href.includes('.mp4') || link.href.includes('.webm'))) {
+            if (mySettings.av1EmbedderEnabled && link.href.includes('cdn.discordapp.com') && (link.href.includes('.mp4') || link.href.includes('.webm'))) {
+                console.log(`Converting av1 link ${link.href}`);
                 const convertedLink = this.convertCDNLink(link.href);
+                if (convertedLink !== link.href) {
+                    link.href = convertedLink;
+                    const resendButton = this.createResendButton(convertedLink);
+                    link.parentElement.appendChild(resendButton);
+                }
+            } else if (mySettings.avifEmbbedderEnabled && !link.href.includes(mySettings.avifConverterURL) && link.href.includes('.avif')) {
+                console.log(`Converting avif link ${link.href}`);
+                const convertedLink = this.convertAVIFLink(link.href);
                 if (convertedLink !== link.href) {
                     link.href = convertedLink;
                     const resendButton = this.createResendButton(convertedLink);
@@ -53,6 +94,9 @@ module.exports = () => ({
                    .replace(/[\?&](ex|is|hm)=[^&]+/g, '')
                    .replace(/\.mp4(&|$)/, '.mp4')
                    .replace(/\.webm(&|$)/, '.webm');
+    },
+    convertAVIFLink(link) {
+        return mySettings.avifConverterURL + link;
     },
     createResendButton(link) {
     const button = document.createElement('button');
