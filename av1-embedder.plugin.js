@@ -1,6 +1,6 @@
 /**
  * @name AV1 Embedder
- * @version 0.0.5
+ * @version 0.0.6
  * @description Adds a replace button to convert Discord CDN links to embeddable format and resend the converted link.
  * @author Gazel
  * @source https://github.com/EpicGazel/BDAV1Embedder/blob/main/av1-embedder.plugin.js
@@ -38,7 +38,7 @@ const getModule = Api.Webpack.getModule;
 const mySettings = {
     av1EmbedderEnabled: true,
     avifEmbedderEnabled: false,
-    av1ConverterURL: '',
+    avifConverterURL: '',
 }
 
 const insertText = (() => {
