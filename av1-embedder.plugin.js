@@ -1,6 +1,6 @@
 /**
  * @name AV1 Embedder
- * @version 0.0.4
+ * @version 0.0.5
  * @description Adds a replace button to convert Discord CDN links to embeddable format and resend the converted link.
  * @author Gazel
  * @source https://github.com/EpicGazel/BDAV1Embedder/blob/main/av1-embedder.plugin.js
@@ -76,7 +76,7 @@ module.exports = () => ({
                     const resendButton = this.createResendButton(convertedLink);
                     link.parentElement.appendChild(resendButton);
                 }
-            } else if (mySettings.avifEmbbedderEnabled && !link.href.includes(mySettings.avifConverterURL) && link.href.includes('.avif')) {
+            } else if (mySettings.avifEmbedderEnabled && !link.href.includes(mySettings.avifConverterURL) && link.href.includes('.avif')) {
                 console.log(`Converting avif link ${link.href}`);
                 const convertedLink = this.convertAVIFLink(link.href);
                 if (convertedLink !== link.href) {
